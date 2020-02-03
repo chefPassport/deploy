@@ -1,0 +1,11 @@
+{
+    "version": 2,
+    "name": "chef",
+    "builds": [{ "src": "chef/package.json", 
+        "use": "@now/static-build", 
+        "config": {"distDir": "build"} }],
+    "routes": [
+        { "src": "/(.*)", 
+            "dest": "chef/$1" }
+    ]
+}
