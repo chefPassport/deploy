@@ -15,8 +15,7 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import "../index.css";
-import { useHistory } from 'react-router-dom';
-
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -152,30 +151,55 @@ export default function NavBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
+        <Button color="inherit">
+          <Link
+            exact={true}
+            to="/home"
+            style={{ textDecoration: "none" }}
+            className="textColor"
+          >
+            Home
+          </Link>
+        </Button>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
+        <Button color="inherit">
+          <Link
+            exact={true}
+            to="/gallery"
+            style={{ textDecoration: "none" }}
+            className="textColor"
+          >
+            Gallery
+          </Link>
+        </Button>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
+      <MenuItem>
+        <Button color="inherit">
+          <Link
+            exact={true}
+            to="/profile"
+            style={{ textDecoration: "none" }}
+            className="textColor"
+          >
+            Profile
+          </Link>
+        </Button>
+      </MenuItem>
+      <MenuItem>
+        <Button color="inherit">
+          <Link
+            exact={true}
+            to="/"
+            style={{ textDecoration: "none" }}
+            className="textColor"
+          >
+            Sign In/Sign Up
+          </Link>
+        </Button>
+      </MenuItem>
+      <MenuItem>
+        <Button color="inherit">Sign Out</Button>
       </MenuItem>
     </Menu>
   );
@@ -211,19 +235,19 @@ export default function NavBar() {
               </Link>
             </Button>
             <Button
-            edge="end"
-            aria-label="account of current user"
-            color="inherit"
-          >
-            <Link
-              exact={true}
-              to="/gallery"
-              style={{ textDecoration: "none" }}
-              className="textColor"
+              edge="end"
+              aria-label="account of current user"
+              color="inherit"
             >
-              Gallery
-            </Link>
-          </Button>
+              <Link
+                exact={true}
+                to="/gallery"
+                style={{ textDecoration: "none" }}
+                className="textColor"
+              >
+                Gallery
+              </Link>
+            </Button>
             <Button
               edge="end"
               aria-label="account of current user"
@@ -249,7 +273,7 @@ export default function NavBar() {
                 style={{ textDecoration: "none" }}
                 className="textColor"
               >
-                Sign In
+                Sign In/Sign Up
               </Link>
             </Button>
             <Button

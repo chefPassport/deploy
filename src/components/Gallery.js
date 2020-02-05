@@ -1,4 +1,7 @@
 import React from "react";
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -11,9 +14,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import "../index.css";
 import NavBar from "./NavBar";
-import ProfileModal from "./ProfileModal";
 import Footer from "./Footer";
-import Heart from "./Heart";
+import Heart from "./gallery_components/Heart";
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -47,10 +49,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const cards = [1, 2, 3, 4, 5, 6];
-
-export default function Profile() {
+const Gallery = ({allRecipes}) => {
   const classes = useStyles();
+  let history = useHistory();
+  let recipesToRender = allRecipes
 
   return (
     <div className="logInAnimation">
@@ -73,26 +75,30 @@ export default function Profile() {
           </div>
           <Container className={classes.cardGrid} maxWidth="md">
             <Grid container spacing={4}>
-              {cards.map(card => (
-                <Grid item key={card} xs={12} sm={6} md={4}>
+              {recipesToRender.map(recipe => (
+                <Grid item key={recipe.id} xs={12} sm={6} md={4}>
                   <div className="card">
                     <Card className={classes.card}>
                       <CardMedia
                         className={classes.cardMedia}
-                        image="https://source.unsplash.com/random"
-                        title="Image title"
+                        image={recipe.image}
+                        title={recipe.recipe_title}
                       />
                       <CardContent className={classes.cardContent}>
                         <Typography gutterBottom variant="h5" component="h2">
-                          Recipe Name
+                          {recipe.recipe_title}
                         </Typography>
                         <Typography>
-                          Description Description Description Description
-                          Description Description
+                          Meal Type: {recipe.meal_type}
                         </Typography>
                       </CardContent>
                       <CardActions>
                         <Heart />
+                        <Button size="small" 
+                          color="primary" 
+                          onClick={() => history.push(`/home/recipe/${recipe.id}`)}>
+                          Learn More
+                        </Button>
                       </CardActions>
                     </Card>
                   </div>
@@ -105,4 +111,12 @@ export default function Profile() {
       </React.Fragment>
     </div>
   );
+};
+
+const mapStateToProps = (state) => {
+  return {
+      allRecipes: state.viewerReducer.allRecipes
+  }
 }
+
+export default connect(mapStateToProps, {})(Gallery)
