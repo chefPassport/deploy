@@ -22,7 +22,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/home/recipe/:id" component={RecipePage} />
         <Route exact path="/home" component={HomePage} />
-        <PrivateRoute path="/profile" componenet={Profile} />
+        <Route path="/profile" component={Profile} />
       </Switch>
     </div>
   );

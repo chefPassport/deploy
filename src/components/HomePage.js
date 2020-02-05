@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { getAllRecipes } from '../actions/viewerActions';
 import styled from 'styled-components';
 // import NavBarC from './NavBarC';
-import NavBar from './NavBar';
+import NavBarNoSearch from './NavBarNoSearch';
 import RecipeList from './homePage_components/recipeList';
 import Spotlight from '../img/Recipe_Spotlight.jpg'
+import Footer from './Footer';
 
 const HomePage = ({getAllRecipes}) => {
 
@@ -16,10 +17,12 @@ const HomePage = ({getAllRecipes}) => {
     return (
         <>
             {/* <NavBarC /> */}
-            <NavBar />
+            <NavBarNoSearch />
             {/* <H3>Recipe Spotlight</H3> */}
             <ImgSpotLight src={Spotlight} alt='recipe spotlight'/>
+            
             <RecipeList />
+            <Footer />
         </>
     )
 };

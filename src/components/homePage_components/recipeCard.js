@@ -35,7 +35,7 @@ const RecipeCard = ({recipe}) => {
                     {recipe.recipe_title}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    {recipe.meal_type}
+                    Meal Type: {recipe.meal_type}
                 </Typography>
                 </CardContent>
             </CardActionArea>

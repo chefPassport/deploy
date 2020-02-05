@@ -23,7 +23,7 @@ const RecipeList = ({allRecipes}) => {
         <H3>Popular Recipes</H3>
         <CardSection>
             {allRecipes ?
-                allRecipes.map(recipe => {
+                allRecipes.slice(0, 3).map(recipe => {
                     return  <CardCont key={recipe.id}>
                                 <RecipeCard key={recipe.id} recipe={recipe} />
                             </CardCont>

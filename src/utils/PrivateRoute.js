@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
                     return <Component {...props}/>
                 } else {
                     console.log('private route access denied')
-                    return <Redirect to='/' />
+                    return <Redirect to='/login' />
                 }
             }}
         />

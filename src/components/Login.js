@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Axios from 'axios';
+import Axios from "axios";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -10,28 +10,14 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import img from "../img/Yellow_Side.jpg";
-import NavBar from "./NavBar";
-import Footer from './Footer';
-
+import NavBarNoSearch from "./NavBarNoSearch";
+import Footer from "./Footer";
 
 import "../index.css";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="">
-        Simmr
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const useStyles = makeStyles(theme => ({
   root: {
-    height: "73vh"
+    height: "100vh"
   },
   image: {
     backgroundImage: `url(${img})`,
@@ -59,33 +45,32 @@ const useStyles = makeStyles(theme => ({
 
 export default function Login(props) {
   const classes = useStyles();
-  const [ userLog, setUserLog ] = useState({
-    username: '',
-    password: ''
+  const [userLog, setUserLog] = useState({
+    username: "",
+    password: ""
   });
-  const handleChanges = (e) => {
+  const handleChanges = e => {
     setUserLog({
       ...userLog,
       [e.target.name]: e.target.value
-    })
+    });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    Axios
-      .post('https://simmr.herokuapp.com/api/chefs/login', userLog)
+    Axios.post("https://simmr.herokuapp.com/api/chefs/login", userLog)
       .then(res => {
-        console.log('user has logged in', res)
-        localStorage.setItem('token', res.data.token)
-        props.history.push('/home')
+        console.log("user has logged in", res);
+        localStorage.setItem("token", res.data.token);
+        props.history.push("/home");
       })
       .catch(err => {
-        console.log('user FAILED to log in', err)
-      })
+        console.log("user FAILED to log in", err);
+      });
   };
 
   return (
     <div className="logInAnimation">
-       <NavBar /> 
+      <NavBarNoSearch />
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={6} className={classes.image} />
@@ -141,22 +126,23 @@ export default function Login(props) {
                   <Link href="/register" variant="body2" color="secondary">
                     {"Don't have an account? Sign Up"}
                   </Link>
-                  <br/>
-                  <br/>
-                  <Link href="/home" variant="body2" color="secondary">
-                    {"Or click here if you just want to view recipes!"}
-                  </Link>
+                  <br />
+                  <br />
                 </Grid>
               </Grid>
-              <Box mt={5}>
-                <Copyright />
-              </Box>
             </form>
           </div>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <Footer />
         </Grid>
-        
       </Grid>
-      <Footer />
     </div>
   );
 }

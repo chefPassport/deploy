@@ -11,8 +11,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import "../index.css";
 import NavBar from "./NavBar";
-import ProfileModal from "./ProfileModal";
-import EditModal from "./EditModal";
+import ProfileModal from "./profile/ProfileModal";
+import EditModal from "./profile/EditModal";
 import Footer from "./Footer";
 
 const useStyles = makeStyles(theme => ({
