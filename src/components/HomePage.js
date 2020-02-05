@@ -15,16 +15,18 @@ const HomePage = ({getAllRecipes}) => {
     }, []);
 
     return (
-        <>
+        <div className="logInAnimation">
+          <>
             {/* <NavBarC /> */}
             <NavBarNoSearch />
             {/* <H3>Recipe Spotlight</H3> */}
-            <ImgSpotLight src={Spotlight} alt='recipe spotlight'/>
-            
+            <ImgSpotLight src={Spotlight} alt="recipe spotlight" />
+    
             <RecipeList />
             <Footer />
-        </>
-    )
+          </>
+        </div>
+      );
 };
 
 export default connect(() => {}, { getAllRecipes })(HomePage)
