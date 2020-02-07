@@ -1,24 +1,18 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import img from "../img/Yellow_Side.jpg";
-// dependancy imports
-
 // material UI imports
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import NavBarNoSearch from "./NavBarNoSearch";
 import Footer from "./Footer";
 import "../index.css";
-
-// material UI ////////////////////////////////
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -59,18 +53,18 @@ const SignUp = props => {
     location: "",
     contact_info: ""
   });
-  const handleChanges = e => {
+  const handleChanges = (e) => {
     setUserReg({
       ...userReg,
       [e.target.name]: e.target.value
     });
   };
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     Axios.post("https://simmr.herokuapp.com/api/chefs/register", userReg)
       .then(res => {
         console.log("new user registered", res);
-        props.history.push("./login");
+        props.history.push("/login");
       })
       .catch(err => {
         console.log("could not register new user", err);

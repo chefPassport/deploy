@@ -3,14 +3,8 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
@@ -29,30 +23,6 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       display: "block"
     }
-  },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.black, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.black, 0.25)
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto"
-    }
-  },
-  searchIcon: {
-    width: theme.spacing(7),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
   },
   inputRoot: {
     color: "inherit"
@@ -81,11 +51,18 @@ const useStyles = makeStyles(theme => ({
 
 export default function NavBarNoSearch() {
   const classes = useStyles();
+  let history = useHistory();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    history.push('./')
+ };
 
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
@@ -199,7 +176,7 @@ export default function NavBarNoSearch() {
         </Button>
       </MenuItem>
       <MenuItem>
-        <Button color="inherit">Sign Out</Button>
+        <Button color="inherit" onClick={logout}>Sign Out</Button>
       </MenuItem>
     </Menu>
   );
@@ -267,6 +244,7 @@ export default function NavBarNoSearch() {
               edge="end"
               aria-label="account of current user"
               color="inherit"
+              onClick={logout}
             >
               Sign Out
             </Button>

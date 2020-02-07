@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { getChefRecipes } from '../../actions/chefActions';
 import axiosWithAuth from '../../utils/axiosWithAuth';
-//material-ui
+// material-ui
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,50 +16,48 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const EditForm = ({recipe, chefId, getChefRecipes, handleClose}) => {
+const CreateRecipeForm = ({chefId, handleClose, getChefRecipes}) => {
   const classes = useStyles();
-  const [ editRecipe, setEditRecipe ] = useState({
-    id: recipe.id,
-    recipe_title: recipe.recipe_title,
-    image: recipe.image,
-    ingredients: recipe.ingredients,
-    instructions: recipe.instructions,
-    meal_type: recipe.meal_type,
-    chef_id: chefId   
+  const [ newRecipe, setNewRecipe ] = useState({
+    recipe_title: '',
+    image: '',
+    ingredients: '',
+    instructions: '',
+    meal_type: '',
+    chef_id: chefId  
   });
   const handleChanges = (e) => {
-    setEditRecipe({
-      ...editRecipe,
+    setNewRecipe({
+      ...newRecipe,
       [e.target.id]: e.target.value
     });
-  }; 
+  };
   const handleSubmit = (e) => {
     // e.preventDefault();
-    console.log('FROM THE EDIT FORM')
+    console.log('FROM THE CREATE SUBMIT', newRecipe)
     axiosWithAuth()
-        .put(`https://simmr.herokuapp.com/api/chefs/${chefId}/recipes/${editRecipe.id}`, editRecipe)
+        .post('https://simmr.herokuapp.com/api/recipes', newRecipe)
         .then(res => {
-            console.log('Recipe was edited', res)
+            console.log('new recipe posted', res)
         })
         .catch(err => {
-            console.log('could not edit recipe', err)
+            console.log('could not post recipe', err)
         })
-    handleClose();
     getChefRecipes(chefId);
-    setEditRecipe({
-      id: recipe.id,
-      recipe_title: recipe.recipe_title,
-      image: recipe.image,
-      ingredients: recipe.ingredients,
-      instructions: recipe.instructions,
-      meal_type: recipe.meal_type,
-      chef_id: chefId   
+    setNewRecipe({
+      recipe_title: '',
+      image: '',
+      ingredients: '',
+      instructions: '',
+      meal_type: '',
+      chef_id: chefId  
     })
-    
+    handleClose();
   };
+
   return (
     <>
-    <form className={classes.root} onSubmit={handleSubmit}  autoComplete="off">
+    <form className={classes.root} onSubmit={handleSubmit} autoComplete="off">
       <div>
         <TextField
           required
@@ -67,7 +65,7 @@ const EditForm = ({recipe, chefId, getChefRecipes, handleClose}) => {
           label="recipe_title"
           variant="outlined"
           onChange={handleChanges}
-          value={editRecipe.recipe_title}
+          value={newRecipe.recipe_title}
         />
       </div>
       <div>
@@ -77,7 +75,7 @@ const EditForm = ({recipe, chefId, getChefRecipes, handleClose}) => {
           label="image"
           variant="outlined"
           onChange={handleChanges}
-          value={editRecipe.image}
+          value={newRecipe.image}
         />
       </div>
       <div>
@@ -87,7 +85,7 @@ const EditForm = ({recipe, chefId, getChefRecipes, handleClose}) => {
           label="ingredients"
           variant="outlined"
           onChange={handleChanges}
-          value={editRecipe.ingredients}
+          value={newRecipe.ingredients}
         />
       </div>
       <div>
@@ -97,7 +95,7 @@ const EditForm = ({recipe, chefId, getChefRecipes, handleClose}) => {
           label="instructions"
           variant="outlined"
           onChange={handleChanges}
-          value={editRecipe.instructions}
+          value={newRecipe.instructions}
         />
       </div>
       <div>
@@ -107,26 +105,27 @@ const EditForm = ({recipe, chefId, getChefRecipes, handleClose}) => {
           label="meal_type"
           variant="outlined"
           onChange={handleChanges}
-          value={editRecipe.meal_type}
+          value={newRecipe.meal_type}
         />
       </div>
       <Button
-      variant="contained"
-      type="button"
-      color="secondary"
-      onClick={handleSubmit}
-      >
-        Edit Recipe
-      </Button>
-    </form>
-        <Button
         variant="contained"
         type="button"
         color="secondary"
-        >
-          close
-        </Button>
-      </>
+        onClick={handleSubmit}
+      >
+        Post Recipe
+      </Button>
+    </form>
+    <Button
+        variant="contained"
+        type="button"
+        onClick={handleClose}
+        color="secondary"
+      >
+        Create Recipe
+      </Button>
+    </>
   );
 };
 
@@ -134,6 +133,6 @@ const mapStateToProps = (state) => {
   return {
       chefId: state.chefReducer.chef.id
   }
-};
+}
 
-export default connect(mapStateToProps, {getChefRecipes})(EditForm);
+export default connect(mapStateToProps, {getChefRecipes})(CreateRecipeForm);

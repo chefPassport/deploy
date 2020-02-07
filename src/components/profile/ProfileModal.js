@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import ModalForm from './ModalForm';
+import CreateRecipeForm from './CreateRecipeForm';
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
@@ -58,7 +58,7 @@ export default function ProfileModal() {
           <Typography>
           to create a new recipe.
           </Typography>
-            <ModalForm handleClose={handleClose}/>
+            <CreateRecipeForm handleClose={handleClose}/>
           </div>
         </Fade>
       </Modal>

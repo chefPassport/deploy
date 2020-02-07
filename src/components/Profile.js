@@ -1,4 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux';
+import { getChefRecipes } from '../actions/chefActions';
+import Axios from 'axios';
+import axiosWithAuth from '../utils/axiosWithAuth';
+// material-UI
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -10,10 +15,13 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import "../index.css";
+// components
 import NavBar from "./NavBar";
 import ProfileModal from "./profile/ProfileModal";
 import EditModal from "./profile/EditModal";
 import Footer from "./Footer";
+import TextFalse from './profile/conditionalComponents/ternaryTextFalse';
+import TextTrue from './profile/conditionalComponents/ternaryTextTrue'
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -47,10 +55,40 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const cards = [1, 2, 3, 4, 5, 6];
 
-export default function Profile() {
+
+const Profile = ({getChefRecipes, chefId, chefRecipes}) => {
   const classes = useStyles();
+  const [ profileInfo, setProfileInfo ] = useState('false')
+  const [ chefInfo, setChefInfo ] = useState([])
+
+  const deleteRecipe = (recipeID, chefId) => {
+    axiosWithAuth()
+        .delete(`https://simmr.herokuapp.com/api/chefs/${chefId}/recipes/${recipeID}`)
+        .then(res => {
+            console.log('Recipe was DELETED', res)
+        })
+        .catch(err => {
+            console.log('could not delete recipe', err)
+        })
+    getChefRecipes(chefId);
+  };
+
+  const conditionalRender = () => {
+    if(chefRecipes.length > 0){
+      setProfileInfo(true)
+      setChefInfo([chefRecipes[0].name, chefRecipes[0].location, chefRecipes[0].contact_info]);
+    } else {
+      setProfileInfo(false)
+      
+    }
+  };
+
+  useEffect(() => {
+    conditionalRender();
+  }, [chefRecipes])
+  
+
 
   return (
     <div className="logInAnimation">
@@ -60,15 +98,15 @@ export default function Profile() {
         <main>
           <div className={classes.heroContent}>
             <Container maxWidth="sm">
-              <Typography
+              {/* <Typography
                 component="h1"
                 variant="h2"
                 align="center"
                 color="textPrimary"
                 gutterBottom
-              >
-                Name
-              </Typography>
+              > */}
+                {profileInfo ? <TextTrue  chefInfo={chefInfo}/> : <TextFalse />}
+              {/* </Typography>
               <Typography
                 variant="h5"
                 align="center"
@@ -84,7 +122,7 @@ export default function Profile() {
                 paragraph
               >
                 Contact: {}
-              </Typography>
+              </Typography> */}
               <div className={classes.heroButtons}>
                 <Grid container spacing={2} justify="center">
                   <Grid item>
@@ -96,8 +134,9 @@ export default function Profile() {
           </div>
           <Container className={classes.cardGrid} maxWidth="md">
             <Grid container spacing={4}>
-              {cards.map(card => (
-                <Grid item key={card} xs={12} sm={6} md={4}>
+              {/* RECIPE CARDS BEING MAPPED */}
+              {chefRecipes.map(recipe => (
+                <Grid item key={recipe.id} xs={12} sm={6} md={4}>
                   <div className="card">
                     <Card className={classes.card}>
                       <CardMedia
@@ -107,19 +146,19 @@ export default function Profile() {
                       />
                       <CardContent className={classes.cardContent}>
                         <Typography gutterBottom variant="h5" component="h2">
-                          Recipe Name
+                          {recipe.recipe_title}
                         </Typography>
                         <Typography>
-                          Description Description Description Description
-                          Description Description
+                          {recipe.meal_type}
                         </Typography>
                       </CardContent>
                       <CardActions>
-                        <EditModal />
+                        <EditModal recipe={recipe}/>
                         <Button
                           variant="contained"
                           type="button"
                           color="secondary"
+                          onClick={() => deleteRecipe(recipe.id, chefId)}
                         >
                           Delete
                         </Button>
@@ -128,6 +167,7 @@ export default function Profile() {
                   </div>
                 </Grid>
               ))}
+              {/* END OF RECIPE CARDS BEING MAPPED */}
             </Grid>
           </Container>
         </main>
@@ -136,4 +176,13 @@ export default function Profile() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+      chefId: state.chefReducer.chef.id,
+      chefRecipes: state.chefReducer.chef.recipes
+  }
+}
+
+export default connect(mapStateToProps, {getChefRecipes})(Profile)
 
