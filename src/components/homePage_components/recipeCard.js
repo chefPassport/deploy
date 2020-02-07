@@ -27,6 +27,7 @@ const RecipeCard = ({recipe}) => {
                     component="img"
                     alt="recipe preview img"
                     height="140"
+                    // image="https://unsplash.com/photos/4icpQA-5eJY"
                     image={recipe.image}
                     title="recipe preview img"
                 />

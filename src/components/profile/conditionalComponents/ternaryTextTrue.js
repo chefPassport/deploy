@@ -12,7 +12,7 @@ const TextTrue = ({chefInfo}) => {
                 color="textPrimary"
                 gutterBottom
             >
-                true {chefInfo[0]}
+                Name: {chefInfo[0]}
             </Typography>
             
             <Typography
@@ -21,7 +21,7 @@ const TextTrue = ({chefInfo}) => {
                 color="textSecondary"
                 paragraph
             >
-                true {chefInfo[1]}
+                Location: {chefInfo[1]}
         </Typography>
 
         <Typography
@@ -30,7 +30,7 @@ const TextTrue = ({chefInfo}) => {
                 color="textSecondary"
                 paragraph
             >
-                true {chefInfo[2]}
+                Phone Number: {chefInfo[2]}
         </Typography>
      </div>
     )

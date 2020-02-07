@@ -39,11 +39,12 @@ const CreateRecipeForm = ({chefId, handleClose, getChefRecipes}) => {
         .post('https://simmr.herokuapp.com/api/recipes', newRecipe)
         .then(res => {
             console.log('new recipe posted', res)
+            getChefRecipes(chefId);
+            handleClose();
         })
         .catch(err => {
             console.log('could not post recipe', err)
         })
-    getChefRecipes(chefId);
     setNewRecipe({
       recipe_title: '',
       image: '',
@@ -52,11 +53,10 @@ const CreateRecipeForm = ({chefId, handleClose, getChefRecipes}) => {
       meal_type: '',
       chef_id: chefId  
     })
-    handleClose();
   };
 
   return (
-    <>
+ 
     <form className={classes.root} onSubmit={handleSubmit} autoComplete="off">
       <div>
         <TextField
@@ -117,15 +117,7 @@ const CreateRecipeForm = ({chefId, handleClose, getChefRecipes}) => {
         Post Recipe
       </Button>
     </form>
-    <Button
-        variant="contained"
-        type="button"
-        onClick={handleClose}
-        color="secondary"
-      >
-        Create Recipe
-      </Button>
-    </>
+ 
   );
 };
 
