@@ -40,12 +40,12 @@ const EditForm = ({recipe, chefId, getChefRecipes, handleClose}) => {
         .put(`https://simmr.herokuapp.com/api/chefs/${chefId}/recipes/${editRecipe.id}`, editRecipe)
         .then(res => {
             console.log('Recipe was edited', res)
+            getChefRecipes(chefId);
+            handleClose();
         })
         .catch(err => {
             console.log('could not edit recipe', err)
         })
-    handleClose();
-    getChefRecipes(chefId);
     setEditRecipe({
       id: recipe.id,
       recipe_title: recipe.recipe_title,
@@ -55,10 +55,9 @@ const EditForm = ({recipe, chefId, getChefRecipes, handleClose}) => {
       meal_type: recipe.meal_type,
       chef_id: chefId   
     })
-    
   };
   return (
-    <>
+  
     <form className={classes.root} onSubmit={handleSubmit}  autoComplete="off">
       <div>
         <TextField
@@ -119,14 +118,7 @@ const EditForm = ({recipe, chefId, getChefRecipes, handleClose}) => {
         Edit Recipe
       </Button>
     </form>
-        <Button
-        variant="contained"
-        type="button"
-        color="secondary"
-        >
-          close
-        </Button>
-      </>
+     
   );
 };
 

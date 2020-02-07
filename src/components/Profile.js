@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import { getChefRecipes } from '../actions/chefActions';
-import Axios from 'axios';
 import axiosWithAuth from '../utils/axiosWithAuth';
+import { useHistory } from 'react-router-dom';
 // material-UI
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
@@ -16,7 +16,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import "../index.css";
 // components
-import NavBar from "./NavBar";
+import NavBar from './NavBarNoSearch';
 import ProfileModal from "./profile/ProfileModal";
 import EditModal from "./profile/EditModal";
 import Footer from "./Footer";
@@ -55,10 +55,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-
 const Profile = ({getChefRecipes, chefId, chefRecipes}) => {
   const classes = useStyles();
+  let history = useHistory();
   const [ profileInfo, setProfileInfo ] = useState('false')
   const [ chefInfo, setChefInfo ] = useState([])
 
@@ -98,31 +97,7 @@ const Profile = ({getChefRecipes, chefId, chefRecipes}) => {
         <main>
           <div className={classes.heroContent}>
             <Container maxWidth="sm">
-              {/* <Typography
-                component="h1"
-                variant="h2"
-                align="center"
-                color="textPrimary"
-                gutterBottom
-              > */}
-                {profileInfo ? <TextTrue  chefInfo={chefInfo}/> : <TextFalse />}
-              {/* </Typography>
-              <Typography
-                variant="h5"
-                align="center"
-                color="textSecondary"
-                paragraph
-              >
-                Location: {}
-              </Typography>
-              <Typography
-                variant="h5"
-                align="center"
-                color="textSecondary"
-                paragraph
-              >
-                Contact: {}
-              </Typography> */}
+                {profileInfo ? <TextTrue chefInfo={chefInfo}/> : <TextFalse />}
               <div className={classes.heroButtons}>
                 <Grid container spacing={2} justify="center">
                   <Grid item>
@@ -141,7 +116,7 @@ const Profile = ({getChefRecipes, chefId, chefRecipes}) => {
                     <Card className={classes.card}>
                       <CardMedia
                         className={classes.cardMedia}
-                        image="https://source.unsplash.com/random"
+                        image={recipe.image}
                         title="Image title"
                       />
                       <CardContent className={classes.cardContent}>
@@ -161,6 +136,11 @@ const Profile = ({getChefRecipes, chefId, chefRecipes}) => {
                           onClick={() => deleteRecipe(recipe.id, chefId)}
                         >
                           Delete
+                        </Button>
+                        <Button size="small" 
+                                color="primary" 
+                                onClick={() => history.push(`/home/recipe/${recipe.id}`)}>
+                        Learn More
                         </Button>
                       </CardActions>
                     </Card>

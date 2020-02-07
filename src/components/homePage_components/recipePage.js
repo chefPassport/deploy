@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import NavBar from '../NavBar';
+import NavBar from '../NavBarNoSearch';
 
 // material-ui
 import PropTypes from 'prop-types';
