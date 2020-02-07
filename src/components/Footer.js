@@ -89,7 +89,7 @@ export default function Footer() {
           style={{ textDecoration: "none" }}
           className="textColor"
         >
-        Sign In/Sign Up
+          Sign In/Sign Up
         </Link>
       </Button>
       <Button

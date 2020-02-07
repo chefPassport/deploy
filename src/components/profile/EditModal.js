@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function EditModal() {
+export default function EditModal({recipe}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -58,7 +58,7 @@ export default function EditModal() {
           <Typography>
           to edit this recipe.
           </Typography>
-            <EditForm handleClose={handleClose}/>
+            <EditForm handleClose={handleClose} recipe={recipe}/>
           </div>
         </Fade>
       </Modal>
